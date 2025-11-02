@@ -1,11 +1,11 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
-// For GitHub Pages deployment
-// Replace "glassmorphism-website" with your repo name if needed
+// ✅ Correct config for both Vercel and GitHub Pages
 export default defineConfig({
   plugins: [react()],
-  base: "/glassmorphism-website/",
+  base: "/Daily-Schedule/", // change this if your repo name changes
+  build: {
+    outDir: "dist",
+  },
 });
-
-

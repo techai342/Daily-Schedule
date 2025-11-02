@@ -9,16 +9,29 @@ export default function PerformanceSummary() {
   const getIcon = (iconName) => {
     const icons = {
       brain: (
-        <path d="M9 12h.01M15 12h.01M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5"/>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M9 12h.01M15 12h.01M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5"/>
+        </svg>
       ),
       zap: (
-        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+        </svg>
       ),
       target: (
-        <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <circle cx="12" cy="12" r="10"/>
+          <circle cx="12" cy="12" r="6"/>
+          <circle cx="12" cy="12" r="2"/>
+        </svg>
       ),
       repeat: (
-        <path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="m17 2 4 4-4 4"/>
+          <path d="M3 11v-1a4 4 0 0 1 4-4h14"/>
+          <path d="m7 22-4-4 4-4"/>
+          <path d="M21 13v1a4 4 0 0 1-4 4H3"/>
+        </svg>
       )
     };
     return icons[iconName];
@@ -28,7 +41,8 @@ export default function PerformanceSummary() {
     <div className="ios-card p-6 mt-10 fade-in">
       <h2 className="text-2xl font-bold text-gray-800 mb-5 flex items-center">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="mr-3 text-yellow-500">
-          <circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+          <circle cx="12" cy="8" r="7"/>
+          <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
         </svg>
         Performance Summary
       </h2>
@@ -38,9 +52,7 @@ export default function PerformanceSummary() {
           <div key={index} className="stat-item">
             <div className="flex items-center mb-2">
               <div className="stat-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  {getIcon(stat.icon)}
-                </svg>
+                {getIcon(stat.icon)}
               </div>
               <span className="text-sm font-medium">{stat.label}</span>
               <span className={`ml-auto text-sm font-bold ${stat.color}`}>{stat.value}%</span>

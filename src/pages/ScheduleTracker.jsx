@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react";
-import { useCurrentTime } from "../hooks/useCurrentTime";
-import { useNotification } from "../hooks/useNotification";
 import CurrentReminder from "../components/CurrentReminder";
 import SyllabusProgress from "../components/SyllabusProgress";
 import ScheduleList from "../components/ScheduleList";
@@ -9,8 +7,34 @@ import PerformanceSummary from "../components/PerformanceSummary";
 import FloatingAction from "../components/FloatingAction";
 
 export default function ScheduleTracker() {
-  const currentTime = useCurrentTime();
-  const { permission, requestPermission } = useNotification();
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [notificationPermission, setNotificationPermission] = useState("default");
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    // Check notification permission
+    if ("Notification" in window) {
+      setNotificationPermission(Notification.permission);
+    }
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const requestNotificationPermission = () => {
+    if ("Notification" in window) {
+      Notification.requestPermission().then((permission) => {
+        setNotificationPermission(permission);
+        if (permission === "granted") {
+          new Notification("Reminders Activated", {
+            body: "You'll now receive study reminders",
+          });
+        }
+      });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-ios-bg">
@@ -24,8 +48,8 @@ export default function ScheduleTracker() {
         
         <CurrentReminder 
           currentTime={currentTime}
-          notificationPermission={permission}
-          onRequestNotification={requestPermission}
+          notificationPermission={notificationPermission}
+          onRequestNotification={requestNotificationPermission}
         />
         
         <SyllabusProgress currentTime={currentTime} />

@@ -1,5 +1,6 @@
 // src/data/scheduleData.js
 
+// 🎯 Full Study Schedule
 export const schedule = [
   {
     id: 1,
@@ -42,3 +43,7 @@ export const schedule = [
     isOvernight: false,
   },
 ];
+
+// 🗓️ Study Plan Timeline (used by SyllabusProgress.jsx)
+export const SYLLABUS_START_DATE = new Date("2025-01-01");
+export const SYLLABUS_END_DATE = new Date("2025-04-30");

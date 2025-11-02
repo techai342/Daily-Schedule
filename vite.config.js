@@ -1,10 +1,10 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-// ✅ Correct config for both Vercel and GitHub Pages
+// ✅ Correct config for Vercel
 export default defineConfig({
   plugins: [react()],
-  base: "/Daily-Schedule/", // change this if your repo name changes
+  base: "/", // ✅ important: use "/" for Vercel, NOT repo name
   build: {
     outDir: "dist",
   },

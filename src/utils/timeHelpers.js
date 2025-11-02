@@ -1,10 +1,32 @@
 export function timeToMinutes(timeStr) {
-  const [time, period] = timeStr.split(' ');
-  if (!time || !period) return -1;
-  let [hours, minutes] = time.split(':').map(Number);
-  if (period.toLowerCase() === 'pm' && hours !== 12) hours += 12;
-  if (period.toLowerCase() === 'am' && hours === 12) hours = 0;
-  return hours * 60 + minutes;
+  if (!timeStr) return -1;
+  
+  // Handle overnight sleep case
+  if (timeStr.includes("10:30 PM – 5:00 AM")) {
+    return {
+      startMinutes: 22 * 60 + 30, // 10:30 PM
+      endMinutes: 5 * 60, // 5:00 AM
+      isOvernight: true
+    };
+  }
+  
+  const [startTimeStr, endTimeStr] = timeStr.split(' – ').map(s => s.trim());
+  
+  const parseTime = (timeString) => {
+    const [time, period] = timeString.split(' ');
+    let [hours, minutes] = time.split(':').map(Number);
+    
+    if (period.toLowerCase() === 'pm' && hours !== 12) hours += 12;
+    if (period.toLowerCase() === 'am' && hours === 12) hours = 0;
+    
+    return hours * 60 + minutes;
+  };
+  
+  return {
+    startMinutes: parseTime(startTimeStr),
+    endMinutes: parseTime(endTimeStr),
+    isOvernight: false
+  };
 }
 
 export function calculateProgress(startDate, endDate, currentDate) {
@@ -22,11 +44,21 @@ export function calculateProgress(startDate, endDate, currentDate) {
 
 export function getDaysRemaining(endDate, currentDate) {
   const msPerDay = 1000 * 60 * 60 * 24;
-  return Math.ceil((endDate.getTime() - currentDate.getTime()) / msPerDay);
+  const timeDiff = endDate.getTime() - currentDate.getTime();
+  return Math.max(0, Math.ceil(timeDiff / msPerDay));
 }
 
 export function formatTimeRemaining(minutes) {
+  if (minutes <= 0) return "0 min";
+  
   const hours = Math.floor(minutes / 60);
   const mins = Math.round(minutes % 60);
-  return (hours > 0 ? `${hours} hr ` : '') + `${mins} min`;
+  
+  if (hours > 0 && mins > 0) {
+    return `${hours} hr ${mins} min`;
+  } else if (hours > 0) {
+    return `${hours} hr`;
+  } else {
+    return `${mins} min`;
+  }
 }

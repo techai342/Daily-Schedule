@@ -1,35 +1,44 @@
-export function timeToMinutes(timeStr) {
-  if (!timeStr) return -1;
-  
-  const [time, period] = timeStr.split(' ');
-  if (!time || !period) return -1;
-  
-  let [hours, minutes] = time.split(':').map(Number);
-  if (period.toLowerCase() === 'pm' && hours !== 12) hours += 12;
-  if (period.toLowerCase() === 'am' && hours === 12) hours = 0;
-  return hours * 60 + minutes;
-}
+// src/data/scheduleData.js
 
-export function calculateProgress(startDate, endDate, currentDate) {
-  const start = startDate.getTime();
-  const end = endDate.getTime();
-  const current = currentDate.getTime();
-  
-  if (current < start) return 0;
-  if (current > end) return 100;
-  
-  const totalDuration = end - start;
-  const elapsedDuration = current - start;
-  return Math.min(100, Math.max(0, (elapsedDuration / totalDuration) * 100));
-}
-
-export function getDaysRemaining(endDate, currentDate) {
-  const msPerDay = 1000 * 60 * 60 * 24;
-  return Math.ceil((endDate.getTime() - currentDate.getTime()) / msPerDay);
-}
-
-export function formatTimeRemaining(minutes) {
-  const hours = Math.floor(minutes / 60);
-  const mins = Math.round(minutes % 60);
-  return (hours > 0 ? `${hours} hr ` : '') + `${mins} min`;
-}
+export const schedule = [
+  {
+    id: 1,
+    area: "Morning Revision",
+    note: "Revise yesterday’s Physics notes",
+    startTime: "07:00 AM",
+    endTime: "07:45 AM",
+    startMinutes: 420,
+    endMinutes: 465,
+    isOvernight: false,
+  },
+  {
+    id: 2,
+    area: "Maths Practice",
+    note: "Solve 10 trigonometry problems",
+    startTime: "08:00 AM",
+    endTime: "09:30 AM",
+    startMinutes: 480,
+    endMinutes: 570,
+    isOvernight: false,
+  },
+  {
+    id: 3,
+    area: "Chemistry Reading",
+    note: "Organic Chemistry Chapter 2",
+    startTime: "10:00 AM",
+    endTime: "11:00 AM",
+    startMinutes: 600,
+    endMinutes: 660,
+    isOvernight: false,
+  },
+  {
+    id: 4,
+    area: "Evening Test",
+    note: "MCQs practice from last 3 chapters",
+    startTime: "07:30 PM",
+    endTime: "09:00 PM",
+    startMinutes: 1150,
+    endMinutes: 1260,
+    isOvernight: false,
+  },
+];

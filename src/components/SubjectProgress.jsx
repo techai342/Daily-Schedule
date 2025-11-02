@@ -27,6 +27,32 @@ export default function SubjectProgress() {
     });
   };
 
+  const getColorClass = (color) => {
+    const colorMap = {
+      'bg-blue-500': 'text-blue-500',
+      'bg-green-500': 'text-green-500', 
+      'bg-red-500': 'text-red-500',
+      'bg-yellow-500': 'text-yellow-500',
+      'bg-purple-500': 'text-purple-500',
+      'bg-indigo-500': 'text-indigo-500',
+      'bg-rose-500': 'text-rose-500'
+    };
+    return colorMap[color] || 'text-gray-500';
+  };
+
+  const getBorderColor = (color) => {
+    const colorMap = {
+      'bg-blue-500': '#3b82f6',
+      'bg-green-500': '#10b981',
+      'bg-red-500': '#ef4444',
+      'bg-yellow-500': '#f59e0b',
+      'bg-purple-500': '#8b5cf6',
+      'bg-indigo-500': '#6366f1',
+      'bg-rose-500': '#f43f5e'
+    };
+    return colorMap[color] || '#6b7280';
+  };
+
   return (
     <div className="ios-card p-6 mt-10 discipline-section fade-in">
       <h2 className="text-2xl font-bold text-gray-800 mb-5 flex items-center">
@@ -40,12 +66,13 @@ export default function SubjectProgress() {
       <div className="grid grid-cols-2 gap-4">
         {Object.entries(subjects).map(([subject, config]) => {
           const percentage = Math.round((config.completed / config.totalUnits) * 100);
+          const colorClass = getColorClass(config.color);
           
           return (
             <div 
               key={subject}
               className="stat-item subject-card p-4 rounded-xl border-l-4"
-              style={{ borderLeftColor: config.color.replace('bg-', '') }}
+              style={{ borderLeftColor: getBorderColor(config.color) }}
               onClick={() => {
                 if (config.completed < config.totalUnits) {
                   setSubjects(prev => ({
@@ -63,7 +90,7 @@ export default function SubjectProgress() {
                   </svg>
                 </div>
                 <span className="text-base font-semibold">{subject}</span>
-                <span className="ml-auto text-lg font-bold" style={{ color: config.color.replace('bg-', 'text-') }}>
+                <span className={`ml-auto text-lg font-bold ${colorClass}`}>
                   {percentage}%
                 </span>
               </div>
@@ -72,7 +99,7 @@ export default function SubjectProgress() {
                   className="progress-bar-inner" 
                   style={{ 
                     width: `${percentage}%`,
-                    backgroundColor: config.color.replace('bg-', '')
+                    backgroundColor: getBorderColor(config.color)
                   }}
                 ></div>
               </div>

@@ -2,14 +2,6 @@ import { useState, useEffect } from "react";
 import { schedule } from "../data/scheduleData";
 import { timeToMinutes } from "../utils/timeHelpers";
 
-// Pre-process schedule
-schedule.forEach(item => {
-  const [startTimeStr, endTimeStr] = item.time.split(' – ').map(s => s.trim());
-  item.startMinutes = timeToMinutes(startTimeStr);
-  item.endMinutes = timeToMinutes(endTimeStr);
-  item.isOvernight = item.area.includes("Sleep") && item.endMinutes < item.startMinutes;
-});
-
 export default function ScheduleList({ currentTime }) {
   const [currentTaskIndex, setCurrentTaskIndex] = useState(null);
 

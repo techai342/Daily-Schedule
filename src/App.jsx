@@ -12,13 +12,15 @@ export default function App() {
     <BrowserRouter>
       <div className="min-h-screen bg-ios-bg">
         <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/add-task" element={<AddTask />} />
-          <Route path="/reports" element={<Reports />} />
-          <Route path="/schedule" element={<ScheduleTracker />} />
-        </Routes>
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/add-task" element={<AddTask />} />
+            <Route path="/reports" element={<Reports />} />
+            <Route path="/schedule" element={<ScheduleTracker />} />
+          </Routes>
+        </main>
         <Footer />
       </div>
     </BrowserRouter>
